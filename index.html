@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tabela Interativa — Temas Pré-definidos</title>
+
+  <!-- estilos separados -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js + plugin de annotation -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🏆 Tabela Interativa — Temas Pré-definidos</h1>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🎨 Escolha um tema (pré-definido)</h3>
+        <p class="muted">Selecione um tema que já funciona bem em claro/escuro. Tema salvo no navegador.</p>
+        <div class="palette" id="palette"></div>
+        <div class="controls-row">
+          <button class="btn" id="toggleThemeBtn">Alternar Claro / Escuro</button>
+          <button class="btn ghost" id="resetThemeBtn">Resetar Tema Padrão</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>📊 Gráfico Avançado</h3>
+        <div class="chart-container">
+          <canvas id="pointsChart"></canvas>
+        </div>
+        <p class="muted small">Linhas: <b>Média</b> (pontilhada) • <b>Mediana</b> (tracejada)</p>
+      </div>
+
+      <div class="card">
+        <h3>📋 Tabela</h3>
+        <table id="pontosTable">
+          <thead><tr id="tableHeader"></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+
+        <div class="table-controls">
+          <input type="text" id="newUserName" placeholder="Nome do usuário">
+          <button class="btn" id="addUserBtn">Adicionar Usuário</button>
+          <button class="btn ghost" id="resetDataBtn">♻️ Resetar para padrão</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- script separado -->
+  <script src="script.js"></script>
+</body>
+</html>

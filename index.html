@@ -1,57 +1,250 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tabela Interativa — Temas Pré-definidos</title>
-
-  <!-- estilos separados -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Sistema de gestão de pontos interativo e responsivo">
+  <title>🏆 Tabela de Pontos — Sistema Interativo</title>
+  
+  <!-- Estilos -->
   <link rel="stylesheet" href="styles.css">
-
-  <!-- Chart.js + plugin de annotation -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+  
+  <!-- Chart.js + Plugin de Annotation -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+  
+  <!-- Preload para performance -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
 </head>
 <body>
-  <div class="container">
-    <h1>🏆 Tabela Interativa — Temas Pré-definidos</h1>
 
+  <!-- Container Principal -->
+  <div id="mainApp" class="container">
+    
+    <!-- Header com ações -->
+    <header class="app-header">
+      <div class="header-content">
+        <h1>🏆 Tabela de Pontos Interativa</h1>
+        <div class="header-actions">
+          <button 
+            class="btn btn-ghost btn-icon" 
+            id="toggleCustomBtn" 
+            title="Mostrar/Ocultar Personalização"
+            aria-label="Alternar painel de personalização"
+            style="display: none;">
+            🎨 Personalizar
+          </button>
+          <button 
+            class="btn btn-ghost btn-icon" 
+            id="downloadBtn" 
+            title="Baixar dados atualizados"
+            aria-label="Baixar arquivo de dados atualizado"
+            style="display: none;">
+            📥 Download
+          </button>
+          <button 
+            class="btn btn-primary btn-icon" 
+            id="loginBtn" 
+            title="Fazer login para editar"
+            aria-label="Fazer login">
+            🔐 Entrar
+          </button>
+          <button 
+            class="btn btn-ghost btn-icon" 
+            id="logoutBtn" 
+            title="Sair do sistema"
+            aria-label="Fazer logout"
+            style="display: none;">
+            🚪 Sair
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Grid de Cards -->
     <div class="grid">
-      <div class="card">
-        <h3>🎨 Escolha um tema (pré-definido)</h3>
-        <p class="muted">Selecione um tema que já funciona bem em claro/escuro. Tema salvo no navegador.</p>
-        <div class="palette" id="palette"></div>
+      
+      <!-- Card de Personalização (Opcional/Oculto) -->
+      <div class="card animate-fade-in" id="customizationCard" style="display: none;">
+        <h3>🎨 Personalização</h3>
+        <p class="muted">Escolha o tema visual do sistema</p>
+        
+        <div class="palette" id="palette" role="radiogroup" aria-label="Seleção de tema"></div>
+        
         <div class="controls-row">
-          <button class="btn" id="toggleThemeBtn">Alternar Claro / Escuro</button>
-          <button class="btn ghost" id="resetThemeBtn">Resetar Tema Padrão</button>
+          <button 
+            class="btn btn-secondary" 
+            id="toggleThemeBtn"
+            aria-label="Alternar entre modo claro e escuro">
+            🌓 Alternar Tema
+          </button>
+          <button 
+            class="btn btn-ghost" 
+            id="resetThemeBtn"
+            aria-label="Resetar tema para o padrão">
+            ↺ Resetar
+          </button>
         </div>
       </div>
 
-      <div class="card">
-        <h3>📊 Gráfico Avançado</h3>
-        <div class="chart-container">
+      <!-- Card de Gráfico -->
+      <div class="card animate-fade-in full-width" style="animation-delay: 0.1s;">
+        <h3>📊 Visualização</h3>
+        <div class="chart-container" role="img" aria-label="Gráfico de pontuação dos usuários">
           <canvas id="pointsChart"></canvas>
         </div>
-        <p class="muted small">Linhas: <b>Média</b> (pontilhada) • <b>Mediana</b> (tracejada)</p>
-      </div>
-
-      <div class="card">
-        <h3>📋 Tabela</h3>
-        <table id="pontosTable">
-          <thead><tr id="tableHeader"></tr></thead>
-          <tbody id="tableBody"></tbody>
-        </table>
-
-        <div class="table-controls">
-          <input type="text" id="newUserName" placeholder="Nome do usuário">
-          <button class="btn" id="addUserBtn">Adicionar Usuário</button>
-          <button class="btn ghost" id="resetDataBtn">♻️ Resetar para padrão</button>
+        <div class="chart-legend">
+          <span class="legend-item">
+            <span class="legend-line legend-avg"></span>
+            <span class="muted small">Média</span>
+          </span>
+          <span class="legend-item">
+            <span class="legend-line legend-med"></span>
+            <span class="muted small">Mediana</span>
+          </span>
         </div>
       </div>
+
+      <!-- Card de Tabela -->
+      <div class="card full-width animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="table-header-section">
+          <h3>📋 Gerenciamento de Pontos</h3>
+          
+          <!-- Abas de Filtro -->
+          <div class="tabs" id="categoryTabs" role="tablist">
+            <button class="tab active" data-category="Geral" role="tab" aria-selected="true">📊 Geral</button>
+            <button class="tab" data-category="Atividade" role="tab" aria-selected="false">💪 Atividade</button>
+            <button class="tab" data-category="Experiencia" role="tab" aria-selected="false">⭐ Experiência</button>
+            <button class="tab" data-category="Bonus" role="tab" aria-selected="false">🎁 Bônus</button>
+            <button class="tab" data-category="Maturidade" role="tab" aria-selected="false">🌱 Maturidade</button>
+            <button class="tab" data-category="Evento" role="tab" aria-selected="false">🎉 Evento</button>
+          </div>
+        </div>
+        
+        <div class="table-wrapper">
+          <table id="pontosTable" role="table" aria-label="Tabela de pontuação">
+            <thead>
+              <tr id="tableHeader" role="row"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Controles (somente quando logado) -->
+        <div class="table-controls" id="tableControls" style="display: none;">
+          <div class="control-group">
+            <div class="input-group">
+              <label for="newUserName" class="sr-only">Nome do novo usuário</label>
+              <input 
+                type="text" 
+                id="newUserName" 
+                placeholder="Nome do novo usuário"
+                aria-label="Digite o nome do usuário a ser adicionado"
+                maxlength="30">
+              <button 
+                class="btn btn-success" 
+                id="addUserBtn"
+                aria-label="Adicionar novo usuário">
+                ➕ Adicionar Usuário
+              </button>
+            </div>
+            
+            <div class="input-group">
+              <label for="newCategoryName" class="sr-only">Nome da nova categoria</label>
+              <input 
+                type="text" 
+                id="newCategoryName" 
+                placeholder="Nome da nova categoria"
+                aria-label="Digite o nome da categoria a ser adicionada"
+                maxlength="30">
+              <button 
+                class="btn btn-success" 
+                id="addCategoryBtn"
+                aria-label="Adicionar nova categoria">
+                ➕ Adicionar Categoria
+              </button>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <button 
+              class="btn btn-primary" 
+              id="saveDataBtn"
+              aria-label="Salvar alterações no arquivo">
+              💾 Salvar Alterações
+            </button>
+            <button 
+              class="btn btn-ghost" 
+              id="resetDataBtn"
+              aria-label="Resetar dados para o estado inicial">
+              ♻️ Resetar Dados
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- script separado -->
+  <!-- Modal de Login -->
+  <div id="loginModal" class="modal" role="dialog" aria-labelledby="loginTitle" aria-modal="true" style="display: none;">
+    <div class="modal-content animate-scale">
+      <div class="login-header">
+        <h2 id="loginTitle">🔐 Acesso ao Sistema</h2>
+        <p class="muted">Entre com suas credenciais para editar</p>
+      </div>
+      
+      <form id="loginForm" class="login-form" novalidate>
+        <div class="form-group">
+          <label for="loginUser">
+            <span>👤 Usuário</span>
+          </label>
+          <input 
+            type="text" 
+            id="loginUser" 
+            name="username"
+            placeholder="Digite seu usuário" 
+            autocomplete="username"
+            required
+            aria-required="true"
+            aria-describedby="userHelp">
+          <small id="userHelp" class="muted">Nome de usuário do sistema</small>
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPass">
+            <span>🔑 Senha</span>
+          </label>
+          <input 
+            type="password" 
+            id="loginPass" 
+            name="password"
+            placeholder="Digite sua senha" 
+            autocomplete="current-password"
+            required
+            aria-required="true"
+            aria-describedby="passHelp">
+          <small id="passHelp" class="muted">Senha de acesso</small>
+        </div>
+        
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-primary btn-block" aria-label="Entrar no sistema">
+            Entrar
+          </button>
+          <button type="button" class="btn btn-ghost btn-block" id="cancelLoginBtn" aria-label="Cancelar login">
+            Cancelar
+          </button>
+        </div>
+        
+        <div id="loginError" class="error-message" role="alert" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Container para notificações -->
+  <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Script Principal -->
   <script src="script.js"></script>
 </body>
 </html>

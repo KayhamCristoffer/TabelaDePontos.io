@@ -1,58 +1,37 @@
 {
-  "Alice": {
-    "Atividade": 15,
-    "Experiencia": 20,
-    "Bonus": 5,
-    "Maturidade": 10,
-    "Evento": 8
-  },
-  "Bob": {
-    "Atividade": -10,
-    "Experiencia": 15,
-    "Bonus": -5,
-    "Maturidade": 8,
-    "Evento": 2
-  },
-  "Charlie": {
-    "Atividade": 5,
-    "Experiencia": 12,
-    "Bonus": 3,
-    "Maturidade": 7,
-    "Evento": 6
-  },
-  "David": {
-    "Atividade": 22,
-    "Experiencia": 18,
-    "Bonus": 10,
-    "Maturidade": 15,
-    "Evento": 12
-  },
-  "Eve": {
-    "Atividade": -18,
-    "Experiencia": 10,
-    "Bonus": -8,
+  "Isah": {
+    "Atividade": 0,
+    "Experiencia": 4,
+    "Bonus": 1,
     "Maturidade": 5,
-    "Evento": 3
+    "Evento": 0
   },
-  "Frank": {
-    "Atividade": 8,
-    "Experiencia": 14,
-    "Bonus": 6,
-    "Maturidade": 9,
-    "Evento": 7
+  "Kim": {
+    "Atividade": 0,
+    "Experiencia": 5,
+    "Bonus": 3,
+    "Maturidade": 5,
+    "Evento": 0
   },
-  "Grace": {
-    "Atividade": 12,
-    "Experiencia": 16,
-    "Bonus": 8,
-    "Maturidade": 11,
-    "Evento": 9
+  "Manu": {
+    "Atividade": 0,
+    "Experiencia": 7,
+    "Bonus": 3,
+    "Maturidade": 8,
+    "Evento": 0
   },
-  "Henry": {
-    "Atividade": -5,
-    "Experiencia": 8,
-    "Bonus": 2,
+  "Moon": {
+    "Atividade": 0,
+    "Experiencia": 7,
+    "Bonus": 0,
     "Maturidade": 6,
-    "Evento": 4
+    "Evento": 0
+  },
+  "Jessica": {
+    "Atividade": 0,
+    "Experiencia": 5,
+    "Bonus": 4,
+    "Maturidade": 9,
+    "Evento": 0
   }
 }
